@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Title</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="ball"></div>
+</body>
+
+<style>
+    .ball{
+        background-color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: inline-block;
+        border: solid 1px black;
+    }
+    body{
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        text-align: center;
+        background-color: rgb(100,100,100);
+
+    }
+
+    html{
+        width: 100%;
+        height: 100%;
+        background-color: black;
+    }
+</style>
+
+<script>
+    var obj;
+    $(document).ready(function () {
+        function  ball() {
+            this.width = $(".ball").width();
+            this.height = $(".ball").height();
+            this.gravity = 0.5;
+            this.velocity = 1;
+            this.spacing = parseInt($(".ball").css("margin-top").replace("px",""));
+            this.down = true;
+            this.update = function () {
+                $(".ball").css("margin-top", this.spacing);
+                this.velocity = this.velocity;
+                this.velocity += this.gravity;
+                this.spacing += this.velocity;
+                if(this.spacing >= $("body").height()-this.height){
+//                    if(this.velocity > 10.9){/
+                        this.spacing = $("body").height()-this.height;
+//                    }
+                    this.velocity = this.velocity * -1;
+                }else if(this.spacing <= 0){
+                    if(this.velocity > 10.9) {
+                        this.spacing = 0 - this.height;
+                    }
+                        this.velocity = this.velocity * -1;
+                }
+
+            }
+        }
+obj = new ball();
+        function main() {
+            obj.update();
+
+            setTimeout(function(){
+//                console.log($(".ball").height());
+//                console.log();
+                main();
+            }, 10);
+        }
+        main();
+
+
+
+
+
+        $("body").click(function(){
+            console.log(parseInt($(this).css("height"))-50);
+            $(this).css("height", parseInt($(this).css("height"))-50);
+        });
+
+        $("body").keydown(function(){
+            console.log(parseInt($(this).css("height"))+50);
+            if(parseInt($(this).css("height")) <= $(document).height()){
+                $(this).css("height", parseInt($(this).css("height"))+50);
+            }
+
+        });
+
+
+    });
+
+
+
+
+</script>
+</html>
